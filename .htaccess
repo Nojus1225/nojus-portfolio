@@ -1,19 +1,19 @@
 RewriteEngine On
 
 # =========================
-# 1. PHP failai be .php galūnės
+# 1. PHP files without .php extension
 # =========================
 
-# Jei atidaroma su .php galūne
+# If it opens with the .php extension
 RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
-# Jei failas egzistuoja su .php, leisti jį pasiekti be galūnės
+# If a file exists with .php, allow it to be accessed without the extension
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
 
 # =========================
-# 2. Blokuoti jautrius failus
+# 2. Block sensitive files
 # =========================
 
 <FilesMatch "\.(env|json|db|sql|log)$">
@@ -21,30 +21,30 @@ RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
     Deny from all
 </FilesMatch>
 
-# Papildoma apsauga (tiesioginiai pavadinimai)
+# Additional protection (direct titles)
 <FilesMatch "^(\.env|config\.php|database\.db|composer\.json)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
 
 # =========================
-# 3. Išjungti directory listing
+# 3. Disable directory listing
 # =========================
 
 Options -Indexes
 
 # =========================
-# 4. Redirect apsauga (optional clean URLs)
+# 4. Redirect protection (optional clean URLs)
 # =========================
 
-# Jei nori kad /about veiktų kaip /about.php
+# If you want /about to work as /about.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
 
 # =========================
-# 5. Paprasta apsauga nuo access į slapukus / system failus
+# 5. Simple protection against access to cookies / system files
 # =========================
 
 <FilesMatch "(\.htaccess|\.htpasswd)">
