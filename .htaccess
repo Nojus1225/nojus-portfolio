@@ -1,0 +1,53 @@
+RewriteEngine On
+
+# =========================
+# 1. PHP failai be .php galūnės
+# =========================
+
+# Jei atidaroma su .php galūne
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Jei failas egzistuoja su .php, leisti jį pasiekti be galūnės
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+
+# =========================
+# 2. Blokuoti jautrius failus
+# =========================
+
+<FilesMatch "\.(env|json|db|sql|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Papildoma apsauga (tiesioginiai pavadinimai)
+<FilesMatch "^(\.env|config\.php|database\.db|composer\.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# =========================
+# 3. Išjungti directory listing
+# =========================
+
+Options -Indexes
+
+# =========================
+# 4. Redirect apsauga (optional clean URLs)
+# =========================
+
+# Jei nori kad /about veiktų kaip /about.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# =========================
+# 5. Paprasta apsauga nuo access į slapukus / system failus
+# =========================
+
+<FilesMatch "(\.htaccess|\.htpasswd)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
