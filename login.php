@@ -2,7 +2,7 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
-    if ($_POST['password'] === 'nojus') {
+    if ($_POST['password'] === 'password') {
         $_SESSION['admin_logged_in'] = true;
         header('Location: admin.php');
         exit;
