@@ -1,0 +1,69 @@
+# =========================
+# 🔐 Secrets / Sensitive files
+# =========================
+.env
+.env.*
+*.env
+config.json
+secrets.json
+
+# Cookies folder
+cookies/
+
+# =========================
+# 🗄️ Databases / Data
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+
+# =========================
+# 📄 Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# 💻 OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 🧠 IDE / Editors
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# 🐍 Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# =========================
+# 📦 Node.js
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# 🌐 Build / cache
+# =========================
+dist/
+build/
+.cache/
+
+# =========================
+# 🔧 Backup files
+# =========================
+*.bak
+*.swp
+*.tmp
